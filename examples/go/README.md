@@ -39,6 +39,6 @@ O exemplo usa OTLP HTTP e envia a telemetria diretamente para o Collector da pla
 ## Como visualizar dados no Grafana
 
 1. Suba a stack local.
-2. Rode `go run .`.
-3. No Grafana, use `Explore` com `Tempo` para localizar o trace `go.example.run`.
-4. Consulte a métrica `go_example_runs_total` no datasource `Prometheus`.
+1. Rode `go run .`.
+1. No Grafana, use `Explore` com `Tempo` para localizar o trace `go.example.run`.
+1. Consulte a métrica `go_example_runs_total` no datasource `Prometheus`.

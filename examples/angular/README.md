@@ -17,8 +17,8 @@ npm install @opentelemetry/api @opentelemetry/sdk-trace-web @opentelemetry/sdk-m
 ## Como executar o exemplo
 
 1. Adicione o conteúdo de `telemetry.ts` ao seu projeto Angular.
-2. Importe o arquivo no `main.ts` antes do bootstrap da aplicação.
-3. Execute o projeto normalmente:
+1. Importe o arquivo no `main.ts` antes do bootstrap da aplicação.
+1. Execute o projeto normalmente:
 
 ```bash
 npm start
@@ -47,7 +47,7 @@ O exemplo envia:
 ## Como visualizar dados no Grafana
 
 1. Suba a plataforma com `docker compose up -d`.
-2. Acesse `http://localhost:3000`.
-3. Gere navegação e chamadas HTTP na aplicação Angular.
-4. Valide traces em `Explore` usando o datasource `Tempo`.
-5. Valide métricas no dashboard `API Overview` ou diretamente no datasource `Prometheus`.
+1. Acesse `http://localhost:3000`.
+1. Gere navegação e chamadas HTTP na aplicação Angular.
+1. Valide traces em `Explore` usando o datasource `Tempo`.
+1. Valide métricas no dashboard `API Overview` ou diretamente no datasource `Prometheus`.

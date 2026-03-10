@@ -7,9 +7,9 @@ This repository is intended to be a reusable local observability platform and an
 ## Development workflow
 
 1. Fork the repository and create a dedicated branch from `main`.
-2. Keep changes focused and small when possible.
-3. Update documentation whenever behavior, examples or contribution workflows change.
-4. Open a pull request with a clear summary, validation notes and any follow-up items.
+1. Keep changes focused and small when possible.
+1. Update documentation whenever behavior, examples or contribution workflows change.
+1. Open a pull request with a clear summary, validation notes and any follow-up items.
 
 ## Running the project locally
 
