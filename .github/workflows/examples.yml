@@ -46,20 +46,11 @@ jobs:
       matrix:
         include:
           - name: nestjs
-            source_file: examples/nestjs/tracing.ts
-            module: commonjs
-            extra_args: --esModuleInterop
-            packages: "@opentelemetry/api @opentelemetry/sdk-node @opentelemetry/auto-instrumentations-node @opentelemetry/exporter-trace-otlp-http @opentelemetry/exporter-metrics-otlp-http @opentelemetry/exporter-logs-otlp-http @opentelemetry/sdk-metrics @opentelemetry/sdk-logs @opentelemetry/resources @opentelemetry/semantic-conventions typescript @types/node"
+            tsconfig: examples/nestjs/tsconfig.ci.json
           - name: react
-            source_file: examples/react/telemetry.ts
-            module: esnext
-            extra_args: --moduleResolution bundler
-            packages: "@opentelemetry/api @opentelemetry/sdk-trace-web @opentelemetry/sdk-trace-base @opentelemetry/exporter-trace-otlp-http @opentelemetry/instrumentation @opentelemetry/instrumentation-fetch @opentelemetry/instrumentation-xml-http-request @opentelemetry/resources @opentelemetry/semantic-conventions typescript"
+            tsconfig: examples/react/tsconfig.ci.json
           - name: angular
-            source_file: examples/angular/telemetry.ts
-            module: esnext
-            extra_args: --moduleResolution bundler
-            packages: "@opentelemetry/api @opentelemetry/sdk-trace-web @opentelemetry/sdk-trace-base @opentelemetry/sdk-metrics @opentelemetry/exporter-trace-otlp-http @opentelemetry/exporter-metrics-otlp-http @opentelemetry/instrumentation @opentelemetry/instrumentation-fetch @opentelemetry/instrumentation-xml-http-request @opentelemetry/resources @opentelemetry/semantic-conventions typescript"
+            tsconfig: examples/angular/tsconfig.ci.json
 
     steps:
       - name: Checkout repository
@@ -70,23 +61,8 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Create temporary workspace
-        run: mkdir -p .ci/${{ matrix.name }}
-
-      - name: Install dependencies
-        working-directory: .ci/${{ matrix.name }}
-        run: |
-          npm init -y
-          npm install --no-package-lock ${{ matrix.packages }}
-
-      - name: Copy source file
-        working-directory: .ci/${{ matrix.name }}
-        run: cp ../../${{ matrix.source_file }} ./example.ts
-
       - name: Type-check example
-        working-directory: .ci/${{ matrix.name }}
-        run: |
-          npx tsc --noEmit --target es2020 --module ${{ matrix.module }} --skipLibCheck ${{ matrix.extra_args }} example.ts
+        run: npx --yes --package typescript tsc -p ${{ matrix.tsconfig }}
 
   validate-go-example:
     name: Validate Go example
