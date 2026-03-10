@@ -78,14 +78,14 @@ This repository provides a single `Docker Compose` stack with automatic Grafana 
 ## Architecture / Arquitetura
 
 1. Aplicações enviam telemetria via OTLP para o OpenTelemetry Collector.
-2. O Collector expõe métricas para o Prometheus, envia traces para o Tempo e logs para o Loki.
-3. O Promtail coleta logs dos containers Docker e também envia para o Loki.
-4. O Grafana já sobe com datasources e dashboards provisionados.
+1. O Collector expõe métricas para o Prometheus, envia traces para o Tempo e logs para o Loki.
+1. O Promtail coleta logs dos containers Docker e também envia para o Loki.
+1. O Grafana já sobe com datasources e dashboards provisionados.
 
 1. Applications send telemetry through OTLP to the OpenTelemetry Collector.
-2. The Collector exposes metrics to Prometheus, sends traces to Tempo and logs to Loki.
-3. Promtail collects Docker container logs and forwards them to Loki.
-4. Grafana starts with datasources and dashboards already provisioned.
+1. The Collector exposes metrics to Prometheus, sends traces to Tempo and logs to Loki.
+1. Promtail collects Docker container logs and forwards them to Loki.
+1. Grafana starts with datasources and dashboards already provisioned.
 
 Documentação adicional em [docs/architecture.md](docs/architecture.md).
 
@@ -124,13 +124,13 @@ Additional details are available in [docs/architecture.md](docs/architecture.md)
 cp .env.example .env
 ```
 
-2. Suba a stack:
+1. Suba a stack:
 
 ```bash
 docker compose up -d
 ```
 
-3. Acesse os serviços:
+1. Acesse os serviços:
 
 - Grafana: `http://localhost:3000`
 - Prometheus: `http://localhost:9090`
@@ -147,16 +147,16 @@ Credenciais padrão do Grafana:
 ## Fluxo recomendado
 
 1. Suba a stack localmente.
-2. Instrumente sua aplicação com OTLP apontando para o Collector.
-3. Gere tráfego local.
-4. Valide métricas no Prometheus, traces no Tempo e logs no Loki via Grafana.
+1. Instrumente sua aplicação com OTLP apontando para o Collector.
+1. Gere tráfego local.
+1. Valide métricas no Prometheus, traces no Tempo e logs no Loki via Grafana.
 
 Recommended flow:
 
 1. Start the local stack.
-2. Instrument your application using OTLP and point it to the Collector.
-3. Generate local traffic.
-4. Validate metrics in Prometheus, traces in Tempo and logs in Loki through Grafana.
+1. Instrument your application using OTLP and point it to the Collector.
+1. Generate local traffic.
+1. Validate metrics in Prometheus, traces in Tempo and logs in Loki through Grafana.
 
 ## Kubernetes Deployment
 

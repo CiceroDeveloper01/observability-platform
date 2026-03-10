@@ -13,9 +13,9 @@ Describe the bug clearly and objectively.
 ## Steps to reproduce
 
 1. Go to `...`
-2. Run `...`
-3. Open `...`
-4. See error
+1. Run `...`
+1. Open `...`
+1. See error
 
 ## Expected behavior
 

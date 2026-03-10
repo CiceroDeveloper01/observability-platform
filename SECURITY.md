@@ -16,7 +16,7 @@ Please do not open a public GitHub issue for security-sensitive reports.
 Prefer one of the following private channels:
 
 1. GitHub private vulnerability reporting, if enabled for the repository.
-2. A private maintainer contact channel published by the repository owners.
+1. A private maintainer contact channel published by the repository owners.
 
 When reporting, include:
 

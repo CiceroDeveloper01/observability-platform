@@ -14,13 +14,13 @@
 cp .env.example .env
 ```
 
-2. Suba todos os serviços:
+1. Suba todos os serviços:
 
 ```bash
 docker compose up -d
 ```
 
-3. Acompanhe a inicialização:
+1. Acompanhe a inicialização:
 
 ```bash
 docker compose logs -f grafana prometheus loki tempo otel-collector promtail
@@ -59,10 +59,10 @@ Use estes endpoints nas aplicações:
 ## Primeiro teste
 
 1. Instrumente uma aplicação usando um dos guias em `docs/`.
-2. Gere tráfego local.
-3. Abra o dashboard `API Overview`.
-4. Vá para `Logs Overview` para validar logs.
-5. Abra `Explore` no Grafana e consulte traces no datasource `Tempo`.
+1. Gere tráfego local.
+1. Abra o dashboard `API Overview`.
+1. Vá para `Logs Overview` para validar logs.
+1. Abra `Explore` no Grafana e consulte traces no datasource `Tempo`.
 
 ## Parando o ambiente
 

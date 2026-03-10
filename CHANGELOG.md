@@ -15,3 +15,4 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 - Open source repository governance, CI workflows and contribution templates
 - Helm chart baseline for Kubernetes deployments
 - Observability-as-code structure for dashboards, alert rules and recording rules
+CI pipeline test

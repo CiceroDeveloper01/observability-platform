@@ -41,6 +41,6 @@ O exemplo envia traces e métricas via OTLP HTTP diretamente para o Collector ex
 ## Como visualizar dados no Grafana
 
 1. Suba a plataforma de observabilidade.
-2. Rode `python app.py`.
-3. Procure o trace `python.example.run` em `Explore` com o datasource `Tempo`.
-4. Consulte a métrica `python_example_runs_total` no datasource `Prometheus`.
+1. Rode `python app.py`.
+1. Procure o trace `python.example.run` em `Explore` com o datasource `Tempo`.
+1. Consulte a métrica `python_example_runs_total` no datasource `Prometheus`.
