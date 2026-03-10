@@ -1,0 +1,10 @@
+groups:
+  - name: http-latency-recording-rules
+    interval: 30s
+    rules:
+      - record: service:http_request_latency:p95
+        expr: |
+          histogram_quantile(
+            0.95,
+            sum(rate(http_server_request_duration_seconds_bucket[5m])) by (service_name, le)
+          )

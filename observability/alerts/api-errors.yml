@@ -1,0 +1,17 @@
+groups:
+  - name: api-error-alerts
+    rules:
+      - alert: HighApiErrorRate
+        expr: |
+          (
+            sum(rate(http_server_request_duration_seconds_count{http_response_status_code=~"5.."}[5m]))
+            /
+            clamp_min(sum(rate(http_server_request_duration_seconds_count[5m])), 1)
+          ) > 0.05
+        for: 10m
+        labels:
+          severity: warning
+          team: platform
+        annotations:
+          summary: High API error rate detected
+          description: Error rate is above 5% for the last 10 minutes.

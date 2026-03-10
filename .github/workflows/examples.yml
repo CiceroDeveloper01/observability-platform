@@ -1,0 +1,148 @@
+name: Examples
+
+on:
+  push:
+    paths:
+      - examples/**
+      - .github/workflows/examples.yml
+  pull_request:
+    paths:
+      - examples/**
+      - .github/workflows/examples.yml
+
+jobs:
+  validate-structure:
+    name: Validate examples structure
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate required files
+        run: |
+          test -f examples/nestjs/README.md
+          test -f examples/nestjs/tracing.ts
+          test -f examples/dotnet/README.md
+          test -f examples/dotnet/Program.cs
+          test -f examples/react/README.md
+          test -f examples/react/telemetry.ts
+          test -f examples/angular/README.md
+          test -f examples/angular/telemetry.ts
+          test -f examples/java/README.md
+          test -f examples/java/Main.java
+          test -f examples/java/pom.xml
+          test -f examples/go/README.md
+          test -f examples/go/main.go
+          test -f examples/go/go.mod
+          test -f examples/python/README.md
+          test -f examples/python/app.py
+          test -f examples/python/requirements.txt
+
+  validate-node-examples:
+    name: Validate Node examples
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - name: nestjs
+            source_file: examples/nestjs/tracing.ts
+            module: commonjs
+            extra_args: --esModuleInterop
+            packages: "@opentelemetry/api @opentelemetry/sdk-node @opentelemetry/auto-instrumentations-node @opentelemetry/exporter-trace-otlp-http @opentelemetry/exporter-metrics-otlp-http @opentelemetry/exporter-logs-otlp-http @opentelemetry/sdk-metrics @opentelemetry/sdk-logs @opentelemetry/resources @opentelemetry/semantic-conventions typescript @types/node"
+          - name: react
+            source_file: examples/react/telemetry.ts
+            module: esnext
+            extra_args: --moduleResolution bundler
+            packages: "@opentelemetry/api @opentelemetry/sdk-trace-web @opentelemetry/sdk-trace-base @opentelemetry/exporter-trace-otlp-http @opentelemetry/instrumentation @opentelemetry/instrumentation-fetch @opentelemetry/instrumentation-xml-http-request @opentelemetry/resources @opentelemetry/semantic-conventions typescript"
+          - name: angular
+            source_file: examples/angular/telemetry.ts
+            module: esnext
+            extra_args: --moduleResolution bundler
+            packages: "@opentelemetry/api @opentelemetry/sdk-trace-web @opentelemetry/sdk-trace-base @opentelemetry/sdk-metrics @opentelemetry/exporter-trace-otlp-http @opentelemetry/exporter-metrics-otlp-http @opentelemetry/instrumentation @opentelemetry/instrumentation-fetch @opentelemetry/instrumentation-xml-http-request @opentelemetry/resources @opentelemetry/semantic-conventions typescript"
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Create temporary workspace
+        run: mkdir -p .ci/${{ matrix.name }}
+
+      - name: Install dependencies
+        working-directory: .ci/${{ matrix.name }}
+        run: |
+          npm init -y
+          npm install --no-package-lock ${{ matrix.packages }}
+
+      - name: Copy source file
+        working-directory: .ci/${{ matrix.name }}
+        run: cp ../../${{ matrix.source_file }} ./example.ts
+
+      - name: Type-check example
+        working-directory: .ci/${{ matrix.name }}
+        run: |
+          npx tsc --noEmit --target es2020 --module ${{ matrix.module }} --skipLibCheck ${{ matrix.extra_args }} example.ts
+
+  validate-go-example:
+    name: Validate Go example
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.22"
+
+      - name: Download dependencies
+        working-directory: examples/go
+        run: go mod tidy
+
+      - name: Build example
+        working-directory: examples/go
+        run: go build ./...
+
+  validate-python-example:
+    name: Validate Python example
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        working-directory: examples/python
+        run: pip install -r requirements.txt
+
+      - name: Validate Python syntax
+        run: python -m py_compile examples/python/app.py
+
+  validate-java-example:
+    name: Validate Java example
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Compile Java example
+        working-directory: examples/java
+        run: mvn -B -q compile
